@@ -93,6 +93,13 @@ def get_C_Index_DeepSurvT(model0, model1, X, time, event, treatment):
 
     return C_index, C_index0, C_index1
 
+def get_C_Index_DeepSurv(model, X, time, event, treatment=None):
+
+    surv = model.predict_surv_df(X)
+    C_index = EvalSurv(surv, time, event, censor_surv='km').concordance_td()
+    print('Time dependent C-Index: ' + str(C_index)[:5])
+    return C_index, None, None
+
 
 def get_ITE_BITES(model, X, treatment, best_treatment=None, death_probability=0.5):
     if not model.baseline_hazards_:
@@ -219,7 +226,7 @@ def get_ITE_DeepSurvT(model0, model1, X, treatment, best_treatment=None, death_p
 
     return ITE, correct_predicted_probability
 
-def get_ITE_DeepSurvT(model0, model1, X, treatment, best_treatment=None, death_probability=0.5):
+def get_ITE_DeepSurv(model, X, treatment, best_treatment=None, death_probability=0.5):
     def find_nearest_index(array, value):
         idx = (np.abs(array - value)).argmin()
         return idx

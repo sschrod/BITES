@@ -36,7 +36,7 @@ def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
             checkpoint_at_end=False,
             local_dir=config["result_dir"])
 
-    elif config["Method"]=='bites':
+    elif config["Method"]=='BITES':
         result = tune.run(
             partial(fit_BITES, X_train=X_train, Y_train=Y_train, event_train=event_train, treatment_train=treatment_train),
             name=config["Method"]+'_'+config["trial_name"],
@@ -99,7 +99,7 @@ def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
 
     else:
         print('Please choose a valid Method!')
-        print('bites, DeepSurv, DeepSurvT ')
+        print('bites, DeepSurv, DeepSurvT, CFRNet ')
         return
 
     return result

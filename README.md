@@ -2,12 +2,12 @@
 # BITES: Balanced Individual Treatment Effect for Survival
 
 **BITES** is a package for counterfactual survival analysis with the aim to predict the individual treatment effect of patients based on right-censored data.
-It is using [PyTorch](https://pytorch.org) and performs automatic hyperparameter optimization using [Raytune](https://docs.ray.io/en/latest/tune/index.html) .
-Further we have build the framework on top of a more stable version of [pycox](https://github.com/havakv/pycox)
-the Sinkhorn divergence implemented in [geomloss](https://www.kernel-operations.io/geomloss/).
+It is using [PyTorch](https://pytorch.org), main functioality of [pycox](https://github.com/havakv/pycox)
+and clauclates the Sinkhorn divergence using [geomloss](https://www.kernel-operations.io/geomloss/).
+Additionally, it is set up for automatic hyper-parameter optimization using [ray[tune]](https://docs.ray.io/en/latest/tune/index.html).
 
-We provide an easy to use framework for BITES, DNN Cox regression ([DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) )
-and include an implementation of the Counterfactual Regression Network [CFRNet](https://arxiv.org/pdf/1606.03976.pdf) [[1]](#3) for non-survival data.
+The package includes an easy to use framework for [BITES](TODO) and [DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) as both single model and T-learner.
+Additionally, for non-censored data it includes the Counterfactual Regression Network [CFRNet](https://arxiv.org/pdf/1606.03976.pdf) [[1]](#3).
 
 ## Get started
 We recommend setting up [PyTorch](https://pytorch.org) with cuda support if you have GPUs available.
