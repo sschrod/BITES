@@ -14,6 +14,15 @@ from torch.utils.data import *
 
 
 def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
+    """
+    :param config:
+    :param X_train:
+    :param Y_train:
+    :param event_train:
+    :param treatment_train:
+    :param kwargs:
+    :return:
+    """
     #TODO: include function that checks for correct inputs!!
 
     ray.init(object_store_memory=100000000)
@@ -49,15 +58,29 @@ def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
 
 
     elif config["Method"]=='DeepSurv':
-        result = tune.run(
-            partial(fit_DeepSurv, X_train=X_train, Y_train=Y_train, event_train=event_train),
-            name=config["Method"] + '_' + config["trial_name"],
-            resources_per_trial={"cpu": config["cpus_per_trial"], "gpu": config["gpus_per_trial"]},
-            config=config,
-            num_samples=config["num_samples"],
-            scheduler=scheduler,
-            checkpoint_at_end=False,
-            local_dir=config["result_dir"])
+        if treatment_train is not None:
+            config["num_covariates"]=np.c_[treatment_train, X_train].shape[1]
+            result = tune.run(
+                partial(fit_DeepSurv, X_train=np.c_[treatment_train, X_train], Y_train=Y_train,
+                        event_train=event_train),
+                name=config["Method"] + '_' + config["trial_name"],
+                resources_per_trial={"cpu": config["cpus_per_trial"], "gpu": config["gpus_per_trial"]},
+                config=config,
+                num_samples=config["num_samples"],
+                scheduler=scheduler,
+                checkpoint_at_end=False,
+                local_dir=config["result_dir"])
+
+        else:
+            result = tune.run(
+                partial(fit_DeepSurv, X_train=X_train, Y_train=Y_train, event_train=event_train),
+                name=config["Method"] + '_' + config["trial_name"],
+                resources_per_trial={"cpu": config["cpus_per_trial"], "gpu": config["gpus_per_trial"]},
+                config=config,
+                num_samples=config["num_samples"],
+                scheduler=scheduler,
+                checkpoint_at_end=False,
+                local_dir=config["result_dir"])
 
     elif config["Method"]=='DeepSurvT':
         X_train0, Y_train0, event_train0 = X_train[treatment_train==0], Y_train[treatment_train==0], event_train[treatment_train==0]

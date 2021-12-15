@@ -1,4 +1,4 @@
-from bites.data.RGBSG.RGBSG_utilis import load_RGBSG
+from data.RGBSG.RGBSG_utilis import load_RGBSG
 from ray import tune
 from bites.model.Fit import fit
 
@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     """Simple config for single set of hyperparameters with suggestions for setting up the tune hyper-parameter search"""
     config = {
-        "Method": 'BITES',                  # or 'ITES', 'DeepSurvT', 'DeepSurv', 'CFRNet'
+        "Method": 'DeepSurvT',                  # or 'ITES', 'DeepSurvT', 'DeepSurv', 'CFRNet'
         "trial_name": 'RGBSG',              # name of your trial
         "result_dir": './ray_results',      # will be created
         "val_set_fraction": 0.2,            # Size of the validation Set
@@ -27,18 +27,11 @@ if __name__ == '__main__':
         "pin_memory": True                  # If the whole data fits on the GPU memory, pin the memory to speed up computation
     }
 
+    """Load your data"""
     X_train, Y_train, event_train, treatment_train, _, _ = load_RGBSG(partition='train',
                                                                       filename_="./data/RGBSG/rgbsg.h5")
 
-
-
-    #TODO: write function that checks input data and config
-    if config["num_covariates"]!=X_train.shape[1]:
-        print('config[num_covariates] has to match the shape of the training data')
-        print('Resetting config[num_covariates]')
-        config["num_covariates"]=X_train.shape[1]
-
-
+    """Fit the model"""
     fit(config, X_train=X_train, Y_train=Y_train, event_train=event_train, treatment_train=treatment_train)
 
 

@@ -76,7 +76,7 @@ class CFRNet_Loss(torch.nn.Module):
         self.blur = blur
         super().__init__()
 
-    def forward(self, log_h: Tensor, durations: Tensor, treatments: Tensor) -> Tensor:
+    def forward(self, log_h: Tensor,out:Tensor, durations: Tensor, treatments: Tensor) -> Tensor:
         mask0 = treatments == 0
         mask1 = treatments == 1
 

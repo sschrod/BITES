@@ -30,8 +30,9 @@ def get_best_model(path_to_experiment="./ray_results/test_hydra", assign_treatme
         best_net.treatment = assign_treatment
 
     elif best_config["Method"] == 'CFRNet':
-        best_net = CFRNet(best_config["num_covariates"], best_config["shared_layer"], out_features=1,
-                            dropout=best_config["dropout"])
+        best_net = CFRNet(best_config["num_covariates"], best_config["shared_layer"], best_config["individual_layer"],
+                         out_features=1,
+                         dropout=best_config["dropout"])
 
     else:
         print('Method not implemented yet!')
@@ -94,10 +95,14 @@ def get_C_Index_DeepSurvT(model0, model1, X, time, event, treatment):
     return C_index, C_index0, C_index1
 
 def get_C_Index_DeepSurv(model, X, time, event, treatment=None):
-
-    surv = model.predict_surv_df(X)
-    C_index = EvalSurv(surv, time, event, censor_surv='km').concordance_td()
-    print('Time dependent C-Index: ' + str(C_index)[:5])
+    if treatment is not None:
+        surv = model.predict_surv_df(np.c_[treatment,X])
+        C_index = EvalSurv(surv, time, event, censor_surv='km').concordance_td()
+        print('Time dependent C-Index: ' + str(C_index)[:5])
+    else:
+        surv = model.predict_surv_df(X)
+        C_index = EvalSurv(surv, time, event, censor_surv='km').concordance_td()
+        print('Time dependent C-Index: ' + str(C_index)[:5])
     return C_index, None, None
 
 
@@ -236,10 +241,10 @@ def get_ITE_DeepSurv(model, X, treatment, best_treatment=None, death_probability
 
     X0 = X[mask0]
     X1 = X[mask1]
-    surv0 = model0.predict_surv_df(X0)
-    surv0_cf = model1.predict_surv_df(X0)
-    surv1 = model1.predict_surv_df(X1)
-    surv1_cf = model0.predict_surv_df(X1)
+    surv0 = model.predict_surv_df(X0)
+    surv0_cf = model.predict_surv_df(np.c_[1-X0[:,0],X0[:,1:]])
+    surv1 = model.predict_surv_df(X1)
+    surv1_cf = model.predict_surv_df(np.c_[1-X1[:,0],X1[:,1:]])
 
     """Find factual and counterfactual prediction: Value at 50% survival probability"""
     pred0 = np.zeros(surv0.shape[1])
@@ -305,9 +310,12 @@ def analyse_randomized_test_set(pred_ite, Y_test, event_test, treatment_test, C_
         #plt.figure(figsize=(8, 2.7))
         #kmf.plot(c=colors[0])
         #kmf_cf.plot(c=colors[1])
-
-        kmf.plot(c=colors[0],ci_show=False)
-        kmf_cf.plot(c=colors[1],ci_show=False)
+        if method_name==None:
+            kmf.plot(c=colors[0],ci_show=False)
+            kmf_cf.plot(c=colors[1],ci_show=False)
+        else:
+            kmf.plot(c=colors[0])
+            kmf_cf.plot(c=colors[1])
     else:
         kmf.plot(c=colors[2])
         kmf_cf.plot(c=colors[3])
