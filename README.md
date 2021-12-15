@@ -45,7 +45,7 @@ and analyse the findings with
 The complete workflow for BITES, DeepSurv and CFRNet are completely controllable by setting the ``config`` parameters
 ````python
 config = {
-    "Method": 'BITES', #'ITES', 'DeepSurv', 'CFRNet'
+    "Method": 'bites', #'ITES', 'DeepSurv', 'CFRNet'
     "trial_name": 'RGBSG',
     "result_dir": './ray_results',
     "val_set_fraction": 0.2,
