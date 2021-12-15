@@ -1,5 +1,5 @@
 import torch
-from BITES.bites.utils.Simple_Network import *
+from bites.utils.Simple_Network import *
 from geomloss import SamplesLoss
 from torch import Tensor
 from torch import nn

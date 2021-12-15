@@ -20,7 +20,10 @@ docker build -t bites -f Dockerfile_BITES .
 
 Local installation is possible using pip install
 ```sh
+  cd BITES
   pip install bites
+  pip install -r requirements.txt
+  
 ```
 
 

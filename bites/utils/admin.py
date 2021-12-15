@@ -4,7 +4,7 @@
 import numba
 import numpy as np
 import scipy
-from BITES.bites.utils.utils import idx_at_times
+from bites.utils.utils import idx_at_times
 
 
 def administrative_scores(func):

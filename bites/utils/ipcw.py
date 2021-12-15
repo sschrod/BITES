@@ -4,7 +4,7 @@
 import numba
 import numpy as np
 import scipy
-from BITES.bites.utils import utils
+from bites.utils import utils
 
 
 @numba.njit(parallel=True)

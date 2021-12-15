@@ -5,9 +5,9 @@ import warnings
 
 import numpy as np
 import pandas as pd
-from BITES.bites.utils import ipcw
-from BITES.bites.utils import utils, admin
-from BITES.bites.utils.concordance import concordance_td
+from bites.utils import ipcw
+from bites.utils import utils, admin
+from bites.utils.concordance import concordance_td
 
 
 class EvalSurv:

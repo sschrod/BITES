@@ -5,9 +5,9 @@ from functools import partial
 import numpy as np
 import ray
 import torch
-from BITES.bites.model.BITES_base import BITES, BITES_Loss
-from BITES.bites.model.CFRNet_base import CFRNet_Loss
-from BITES.bites.model.DeepSurv_base import DeepSurv, DeepSurv_Loss
+from bites.model.BITES_base import BITES, BITES_Loss
+from bites.model.CFRNet_base import CFRNet_Loss
+from bites.model.DeepSurv_base import DeepSurv, DeepSurv_Loss
 from ray import tune
 from ray.tune.schedulers import ASHAScheduler
 from torch.utils.data import *

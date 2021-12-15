@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 import torch
-from BITES.bites.utils.Simple_Network import *
-from BITES.bites.utils.loss import cox_ph_loss
+from bites.utils.Simple_Network import *
+from bites.utils.loss import cox_ph_loss
 from torch import Tensor
 from torch import nn
 
