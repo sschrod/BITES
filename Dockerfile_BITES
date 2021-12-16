@@ -1,0 +1,23 @@
+FROM nvidia/cuda:11.4.2-base-ubuntu20.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.8-dev \
+    python3-pip \
+    libffi-dev \
+    build-essential \
+    rsync
+
+
+WORKDIR /mnt
+
+RUN pip3 install numpy
+RUN pip3 install matplotlib
+RUN pip3 install tensorflow
+RUN pip3 install scipy
+RUN pip3 install scikit-learn
+RUN pip3 install geomloss
+RUN pip3 install scikit-survival
+RUN pip3 install ray[tune]
+RUN pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip3 install numba
+Run pip3 install ray[default]
