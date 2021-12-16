@@ -1,2 +1,5 @@
 /examples/data/RGBSG/rgbsg.h5
 /examples/ray_results
+/bites.egg-info
+/build
+*.pdf

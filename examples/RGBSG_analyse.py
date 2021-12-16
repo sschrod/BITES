@@ -5,7 +5,7 @@ from data.RGBSG.RGBSG_utilis import load_RGBSG
 if __name__ == '__main__':
 
     """Choose Method to analyse!"""
-    method = 'DeepSurvT'
+    method = 'BITES'
     compare_against_ATE = False
 
     X_train, Y_train, event_train, treatment_train, _, _ = load_RGBSG(partition='train',

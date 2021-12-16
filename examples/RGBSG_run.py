@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     """Simple config for single set of hyperparameters with suggestions for setting up the tune hyper-parameter search"""
     config = {
-        "Method": 'DeepSurvT',                  # or 'ITES', 'DeepSurvT', 'DeepSurv', 'CFRNet'
+        "Method": 'BITES',                  # or 'ITES', 'DeepSurvT', 'DeepSurv', 'CFRNet'
         "trial_name": 'RGBSG',              # name of your trial
         "result_dir": './ray_results',      # will be created
         "val_set_fraction": 0.2,            # Size of the validation Set
@@ -22,7 +22,7 @@ if __name__ == '__main__':
         "blur": 0.05,                       # or tune.grid_search([<list values>]),
         "grace_period": 50,                 # Early stopping
         "gpus_per_trial": 0,                # For GPU support set >0 (fractions of GPUs are supported)
-        "cpus_per_trial": 2,                # scale according to your recources
+        "cpus_per_trial": 8,                # scale according to your recources
         "num_samples": 1,                   # Number the run is repeated
         "pin_memory": True                  # If the whole data fits on the GPU memory, pin the memory to speed up computation
     }
