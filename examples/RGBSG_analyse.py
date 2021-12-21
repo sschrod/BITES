@@ -14,7 +14,7 @@ if __name__ == '__main__':
                                                                   filename_="./data/RGBSG/rgbsg.h5")
 
     if method == 'BITES' or method == 'ITES':
-        model, config = get_best_model("ray_results/" + method + "_RGBSG")
+        model, config = get_best_model("example_results/" + method + "_RGBSG")
         model.compute_baseline_hazards(X_train, [Y_train, event_train, treatment_train])
 
         C_index, _, _ = get_C_Index_BITES(model, X_test, Y_test, event_test, treatment_test)

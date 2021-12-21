@@ -1,0 +1,26 @@
+{
+  "Method": "BITES",
+  "alpha": 0.01,
+  "batch_size": 3000,
+  "blur": 0.1,
+  "cpus_per_trial": 2,
+  "dropout": 0.2,
+  "epochs": 5000,
+  "gpus_per_trial": 0.25,
+  "grace_period": 50,
+  "individual_layer": [
+    3
+  ],
+  "lr": 0.002838346802854913,
+  "num_covariates": 9,
+  "num_samples": 10,
+  "pin_memory": true,
+  "result_dir": "./ray_results",
+  "shared_layer": [
+    7,
+    5
+  ],
+  "trial_name": "RGBSG",
+  "val_set_fraction": 0.2,
+  "weight_decay": 0.01
+}
