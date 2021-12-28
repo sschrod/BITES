@@ -2,36 +2,43 @@
 # BITES: Balanced Individual Treatment Effect for Survival
 
 **BITES** is a package for counterfactual survival analysis with the aim to predict the individual treatment effect of patients based on right-censored data.
-It is using [PyTorch](https://pytorch.org), main functioality of [pycox](https://github.com/havakv/pycox)
-and clauclates the Sinkhorn divergence using [geomloss](https://www.kernel-operations.io/geomloss/).
+It is using [PyTorch](https://pytorch.org), and main functioality of [pycox](https://github.com/havakv/pycox).
+To balance generating distributions of treatment and control group it calculates the Sinkhorn divergence using [geomloss](https://www.kernel-operations.io/geomloss/).
 Additionally, it is set up for automatic hyper-parameter optimization using [ray[tune]](https://docs.ray.io/en/latest/tune/index.html).
 
-The package includes an easy to use framework for [BITES](TODO) and [DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) as both single model and T-learner.
-Additionally, for non-censored data it includes the Counterfactual Regression Network [CFRNet](https://arxiv.org/pdf/1606.03976.pdf) [[1]](#3).
+The package includes an easy to use framework for [BITES](TODO)(AddLink) and [DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) both as single model and T-learner.
+Additionally, to analyse non-censored data it includes the Counterfactual Regression Network [CFRNet](https://arxiv.org/pdf/1606.03976.pdf) [[3]](#3).
 
 ## Get started
-We recommend setting up [PyTorch](https://pytorch.org) with cuda support if you have GPUs available.
-The package is tested with torch==1.9.1+cu111 with the most recent CUDA 11.4. 
+We recommend setting up [PyTorch](https://pytorch.org) with cuda if you have GPUs available.
+The package is tested with torch==1.9.1+cu111 working with most recent CUDA 11.4. 
 
-The easiest way to use BITES with all supported features is to build the provided Dockerfile
-```shell
-docker build -t bites -f Dockerfile_BITES .
-```
 
-Local installation is possible using pip install
+To install the package from source clone the directory and use pip
 ```sh
+  git clone https://github.com/sschrod/BITES.git
   cd BITES
   pip install .
   pip install -r requirements.txt
   
 ```
 
+Alternatively, you can build a Docker image with
+```shell
+docker build -t bites -f Dockerfile_BITES .
+```
+
+
+
 
 
 ## Usage
 ### Example
-We include two example scripts based on the discussed cases in our BITES-Paper(ADD LINK).
-For the simulated case run the...
+We include two example scripts for both Simulated and application on the RGBSG data as discussed in our [paper](ADD LINK)[[1]](#1).
+To train Bites on one of the Simulated datasets run 
+
+continue here!!!!!!!!!!!!!!!!!!!!!!
+
 To train BITES on the RGBSG data run [RGBSG_run.py](/BITES/examples/RGBSG_run.py). This starts hyper-parameter optimization for the network settings specified in `config` (see below).
 Results are saved in `/<result_dir>/<trial_name>` and can be analised by [RGBSG_analyse.py](/BITES/examples/RGBSG_analyse.py).
 
@@ -73,23 +80,7 @@ Here we use the search routines provided by [Raytune](https://docs.ray.io/en/lat
 
 ### The network Architecture
 The BITES architecture is given by
-````latex {cmd=true hide=true}
-\documentclass{standalone}
-\usepackage{tikz}
-\usetikzlibrary{matrix}
-\begin{document}
-\begin{tikzpicture}
-  \matrix (m) [matrix of math nodes,row sep=3em,column sep=4em,minimum width=2em]
-  {
-     F & B \\
-      & A \\};
-  \path[-stealth]
-    (m-1-1) edge node [above] {$\beta$} (m-1-2)
-    (m-1-2) edge node [right] {$\rho$} (m-2-2)
-    (m-1-1) edge node [left] {$\alpha$} (m-2-2);
-\end{tikzpicture}
-\end{document}
-````
+
 
 
 
@@ -100,18 +91,18 @@ The BITES architecture is given by
 ## Use your own Data
 To use BITES for your own data simply call the function
 ````python
-from BITES import run
-run(config,X,y,event,treatment)
+from bites.model.Fit import fit
+fit(config, X_train, Y_train, event_train, treatment_train)
 ````
 And to analyse the results use
 ````python
-from BITES import analyse
+from bites.analyse.analyse_utils import analyse
 analyse(config, X_train,Y_train,event_train,treatment_train,X_test,Y_test,event_test,treatment_test)
 ````
 This will load the best trial with respect to the validation loss and return the achived C-Index on the test set.
 To load the model directly call
 ````python
-from Bites.bites import get_best_model
+from bites.analyse.analyse_utils import get_best_model
 model=get_best_model(config)
 ````
 [some_file.py](link) 

@@ -63,8 +63,8 @@ def get_C_Index_BITES(model, X, time, event, treatment):
                        censor_surv='km').concordance_td()
 
     print('Time dependent C-Index: ' + str(C_index)[:5])
-    print('Case0 C-Index: ' + str(C_index0)[:5])
-    print('Case1 C-Index: ' + str(C_index1)[:5])
+    print('Treatment 0 C-Index: ' + str(C_index0)[:5])
+    print('Treatment 1 C-Index: ' + str(C_index1)[:5])
 
     return C_index, C_index0, C_index1
 
@@ -89,8 +89,8 @@ def get_C_Index_DeepSurvT(model0, model1, X, time, event, treatment):
     C_index1 = EvalSurv(surv1, time1, event1, censor_surv='km').concordance_td()
 
     print('Time dependent C-Index: ' + str(C_index)[:5])
-    print('Case0 C-Index: ' + str(C_index0)[:5])
-    print('Case1 C-Index: ' + str(C_index1)[:5])
+    print('Treatment 0 C-Index: ' + str(C_index0)[:5])
+    print('Treatment 1 C-Index: ' + str(C_index1)[:5])
 
     return C_index, C_index0, C_index1
 
@@ -134,11 +134,11 @@ def get_ITE_BITES(model, X, treatment, best_treatment=None, death_probability=0.
     ITE1 = pred1 - pred1_cf
 
     correct_predicted_probability=None
-    if best_treatment:
+    if best_treatment is not None:
         pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
         pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
         correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1, 3] == pred_best_choice1)) \
+                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
                                         / (pred_best_choice0.size + pred_best_choice1.size)
         print('Fraction best choice: ' + str(correct_predicted_probability))
 
@@ -160,11 +160,11 @@ def get_ITE_CFRNet(model, X, treatment, best_treatment=None):
     pred_cf,_ = model.predict_numpy(X, 1-treatment)
 
     correct_predicted_probability=None
-    if best_treatment:
+    if best_treatment is not None:
         pred_best_choice0=(pred_cf[treatment==0]-pred[treatment==0]>0) * 1
         pred_best_choice1=(pred[treatment==1]-pred_cf[treatment==1]>0) * 1
         correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1, 3] == pred_best_choice1)) \
+                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
                                         / (pred_best_choice0.size + pred_best_choice1.size)
         print('Fraction best choice: ' + str(correct_predicted_probability))
 
@@ -211,11 +211,11 @@ def get_ITE_DeepSurvT(model0, model1, X, treatment, best_treatment=None, death_p
     ITE1 = pred1 - pred1_cf
 
     correct_predicted_probability=None
-    if best_treatment:
+    if best_treatment is not None:
         pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
         pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
         correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1, 3] == pred_best_choice1)) \
+                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
                                         / (pred_best_choice0.size + pred_best_choice1.size)
         print('Fraction best choice: ' + str(correct_predicted_probability))
 
@@ -262,11 +262,11 @@ def get_ITE_DeepSurv(model, X, treatment, best_treatment=None, death_probability
     ITE1 = pred1 - pred1_cf
 
     correct_predicted_probability=None
-    if best_treatment:
+    if best_treatment is not None:
         pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
         pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
         correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1, 3] == pred_best_choice1)) \
+                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
                                         / (pred_best_choice0.size + pred_best_choice1.size)
         print('Fraction best choice: ' + str(correct_predicted_probability))
 
@@ -293,7 +293,6 @@ def analyse_randomized_test_set(pred_ite, Y_test, event_test, treatment_test, C_
     antirecommended_event = event_test[mask_antirecommended]
 
     logrank_result = logrank_test(recommended_times, antirecommended_times, recommended_event, antirecommended_event, alpha=0.95)
-    logrank_result.print_summary(style='ascii', decimals=4)
 
     colors = sns.color_palette()
     kmf = KaplanMeierFitter()

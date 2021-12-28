@@ -5,19 +5,25 @@ from data.RGBSG.RGBSG_utilis import load_RGBSG
 if __name__ == '__main__':
 
     """Choose Method to analyse!"""
-    method = 'BITES'
-    compare_against_ATE = False
+    ###############################
+    method = 'BITES'                    # Set Name: BITES, ITES, DeepSurv, DeepSurvT, CFRNet
+    results_dir='example_results/'      # Set result_dir
+    compare_against_ATE = True          # Plot against null hypothesis of always administering the treatment (True/False)
+    ################################
 
+    """Load triaining (for baseline hazards) and test data."""
     X_train, Y_train, event_train, treatment_train, _, _ = load_RGBSG(partition='train',
                                                                       filename_="./data/RGBSG/rgbsg.h5")
     X_test, Y_test, event_test, treatment_test, _, _ = load_RGBSG(partition='test',
                                                                   filename_="./data/RGBSG/rgbsg.h5")
 
+    # Analysis of the different Methods
+    result_path=results_dir+ method + "_RGBSG"
     if method == 'BITES' or method == 'ITES':
-        model, config = get_best_model("example_results/" + method + "_RGBSG")
+        model, config = get_best_model(result_path)
         model.compute_baseline_hazards(X_train, [Y_train, event_train, treatment_train])
 
-        C_index, _, _ = get_C_Index_BITES(model, X_test, Y_test, event_test, treatment_test)
+        C_index, C_index_T0, C_index_T1 = get_C_Index_BITES(model, X_test, Y_test, event_test, treatment_test)
         pred_ite, _ = get_ITE_BITES(model, X_test, treatment_test)
 
         if compare_against_ATE:
@@ -30,6 +36,7 @@ if __name__ == '__main__':
             analyse_randomized_test_set(pred_ite, Y_test, event_test, treatment_test, C_index=C_index,
                                         method_name=method,
                                         save_path='RGBSG_' + method + '.pdf')
+
     elif method == 'DeepSurvT':
         model0, config0 = get_best_model("ray_results/" + method + "_T0_RGBSG", assign_treatment=0)
         model0.compute_baseline_hazards(X_train, [Y_train, event_train, treatment_train])
@@ -64,3 +71,6 @@ if __name__ == '__main__':
     elif method == 'CFRNet':
         model, config = get_best_model("ray_results/" + method + "_RGBSG")
         pred_ite=get_ITE_CFRNet(model, X_test, treatment_test, best_treatment=None)
+
+
+    # The loaded model can be used for further analysis!
