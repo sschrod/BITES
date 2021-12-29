@@ -336,4 +336,18 @@ def analyse_randomized_test_set(pred_ite, Y_test, event_test, treatment_test, C_
         plt.savefig(save_path, format='pdf')
 
 
+def plot_ITE_correlation(pred_ITE, y_true,y_cf,treatment):
+    ITE = np.zeros(pred_ITE.shape[0])
+    true_ITE0 = -(y_true[treatment == 0] - y_cf[treatment == 0])
+    true_ITE1 = y_true[treatment == 1] - y_cf[treatment == 1]
+    k, j = 0, 0
+    for i in range(pred_ITE.shape[0]):
+        if treatment[i] == 0:
+            ITE[i] = true_ITE0[k]
+            k = k + 1
+        else:
+            ITE[i] = true_ITE1[j]
+            j = j + 1
 
+    ax=sns.scatterplot(x=ITE,y=pred_ITE)
+    ax.set(xlabel='ITE', ylabel='pred_ITE')
