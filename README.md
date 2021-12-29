@@ -1,6 +1,12 @@
 
 # BITES: Balanced Individual Treatment Effect for Survival
 
+```latex {cmd=true}
+\documentclass{standalone}
+\begin{document}
+  Hello world!
+\end{document}
+```
 **BITES** is a package for counterfactual survival analysis with the aim to predict the individual treatment effect of patients based on right-censored data.
 It is using [PyTorch](https://pytorch.org), and main functioality of [pycox](https://github.com/havakv/pycox).
 To balance generating distributions of treatment and control group it calculates the Sinkhorn divergence using [geomloss](https://www.kernel-operations.io/geomloss/).
