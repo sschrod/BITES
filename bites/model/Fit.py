@@ -15,15 +15,14 @@ from torch.utils.data import *
 
 def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
     """
-    :param config:
-    :param X_train:
-    :param Y_train:
-    :param event_train:
-    :param treatment_train:
+    :param config: config file as given in the examples.
+    :param X_train: np.array(num_samples, features)
+    :param Y_train: np.array(num_samples,)
+    :param event_train: np.array(num_samples,)
+    :param treatment_train: np.array(num_samples,)
     :param kwargs:
-    :return:
+    :return: tune.ExperimentAnalysis: Object for experiment analysis.
     """
-    #TODO: include function that checks for correct inputs!!
 
     ray.init(object_store_memory=100000000)
     scheduler = ASHAScheduler(

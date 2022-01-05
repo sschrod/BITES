@@ -96,7 +96,7 @@ from bites.analyse.analyse_utils import analyse
 analyse(config, X_train,Y_train,event_train,treatment_train,X_test,Y_test,event_test,treatment_test)
 ````
 
-##Additional Features
+## Additional Features
 ### CFRNet
 Using CFRNet will ignore the event indicator and assume complete, non-censored outcomes.
 
@@ -104,9 +104,9 @@ Using CFRNet will ignore the event indicator and assume complete, non-censored o
 DeepSurv can be used without Treatment assignment[[6]](#6). Just set ```treatment_train=None``` to only consider a single survival model.
 
 
-##References
+## References
 
-[1] Stefan Schrod, Andreas Schäfer, and Michael Altenbuchinger. BITES: Balanced individual treatment effect for survival data, 2022. [[arXiv]](link).
+[1] Stefan Schrod, et. al. BITES: Balanced Individual Treatment Effect for Survival data, 2022. [[arXiv]](link).
 
 [2] Håvard Kvamme, Ørnulf Borgan, and Ida Scheel. Time-to-event prediction with neural networks and Cox regression. *Journal of Machine Learning Research*, 20(129):1–30, 2019. [[paper]](http://jmlr.org/papers/v20/18-424.html).
 
