@@ -112,8 +112,8 @@ DeepSurv can be used without Treatment assignment[[6]](#6). Just set ```treatmen
 
 [3] Uri Shalit, Fredrik D. Johansson, and David Sontag. Estimating individual treatment effect: generalization bounds and algorithms, 2016. [[arXiv]](http://arxiv.org/pdf/1606.03976v5).
 
-[4] J. A. Foekens, et al., The urokinase system of plasminogen activation and prognosis in 2780 breast cancer patients. *Cancer research*, 60(3):636–643, 2000. [[paper]](https://pubmed.ncbi.nlm.nih).
-gov/10676647/.
+[4] J. A. Foekens, et al., The urokinase system of plasminogen activation and prognosis in 2780 breast cancer patients. *Cancer research*, 60(3):636–643, 2000. [[paper]](https://pubmed.ncbi.nlm.nih.gov/10676647/).
+
 
 [5] Claudia Schmoor, et al., Randomized and non-randomized patients in clinical trials: Experiences with comprehensive cohort studies. *Statistics in Medicine*, 15(3):263–271, 1996. [[paper]](https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-0258(19960215)15:3%3C263::AID-SIM165%3E3.0.CO;2-K)
 
