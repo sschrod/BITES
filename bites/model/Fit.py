@@ -13,7 +13,7 @@ from ray.tune.schedulers import ASHAScheduler
 from torch.utils.data import *
 
 
-def fit (config, X_train, Y_train, event_train, treatment_train=None,**kwargs):
+def fit (config, X_train, Y_train, event_train=None, treatment_train=None,**kwargs):
     """
     :param config: config file as given in the examples.
     :param X_train: np.array(num_samples, features)

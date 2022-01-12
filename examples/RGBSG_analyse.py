@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     elif method == 'CFRNet':
         model, config = get_best_model("ray_results/" + method + "_RGBSG")
-        pred_ite=get_ITE_CFRNet(model, X_test, treatment_test, best_treatment=None)
+        pred_ite,_=get_ITE_CFRNet(model, X_test, treatment_test, best_treatment=None)
 
 
     # The loaded model can be used for further analysis!
