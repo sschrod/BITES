@@ -54,8 +54,6 @@ def get_C_Index_BITES(model, X, time, event, treatment):
     surv0, surv1 = model.predict_surv_df(X, treatment)
     surv = pd.concat([surv0, surv1], axis=1)
     surv = surv.interpolate('index')
-    surv = surv.iloc[:-100, :].fillna(1)
-    surv = surv.iloc[100:, :].fillna(0)
     C_index0 = EvalSurv(surv0, time[treatment == 0], event[treatment == 0], censor_surv='km').concordance_td()
     C_index1 = EvalSurv(surv1, time[treatment == 1], event[treatment == 1], censor_surv='km').concordance_td()
     C_index = EvalSurv(surv, np.append(time[treatment == 0], time[treatment == 1]),
@@ -81,8 +79,6 @@ def get_C_Index_DeepSurvT(model0, model1, X, time, event, treatment):
 
     surv = pd.concat([surv0, surv1], axis=1)
     surv = surv.interpolate('index')
-    surv = surv.iloc[:-100, :].fillna(1)
-    surv = surv.iloc[100:, :].fillna(0)
     C_index = EvalSurv(surv, np.append(time0, time1),
                        np.append(event0, event1), censor_surv='km').concordance_td()
     C_index0 = EvalSurv(surv0, time0, event0, censor_surv='km').concordance_td()

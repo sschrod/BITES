@@ -6,7 +6,7 @@ It is using [PyTorch](https://pytorch.org), and main functioality of [pycox](htt
 To balance generating distributions of treatment and control group it calculates the Sinkhorn divergence using [geomloss](https://www.kernel-operations.io/geomloss/).
 Additionally, it is set up for automatic hyper-parameter optimization using [ray[tune]](https://docs.ray.io/en/latest/tune/index.html).
 
-The package includes an easy to use framework for [BITES](TODO)(AddLink) and [DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) both as single model and T-learner.
+The package includes an easy to use framework for [BITES](https://arxiv.org/abs/2201.03448) and [DeepSurv](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1) both as single model and T-learner.
 Additionally, to analyse non-censored data it includes the Counterfactual Regression Network [CFRNet](https://arxiv.org/pdf/1606.03976.pdf) [[3]](#3).
 
 ## Get started
@@ -63,7 +63,7 @@ Both, the [Raytune](https://docs.ray.io/en/latest/tune/index.html) search routin
 
 
 ### Examples
-We include two example scripts for both Simulated and RGBSG data[[4,5]](#4) as discussed in our [paper](ADD LINK)[[1]](#1).
+We include two example scripts for both Simulated and RGBSG data[[4,5]](#4) as discussed in [BITES](https://arxiv.org/abs/2201.03448) [[1]](#1).
 To train Bites on one of the Simulated datasets run [Simulation_run.py](https://github.com/sschrod/BITES/blob/main/examples/Simulation_run.py).
 The default is set to the non-linear Simulation with treatment bias, with a single set of hyper-parameters. 
 The results can be analysed with [Simulation_analyse.py](https://github.com/sschrod/BITES/blob/main/examples/Simulation_analyse.py).
@@ -106,7 +106,7 @@ DeepSurv can be used without Treatment assignment[[6]](#6). Just set ```treatmen
 
 ## References
 
-[1] Stefan Schrod, et. al. BITES: Balanced Individual Treatment Effect for Survival data, 2022. [[arXiv]](link).
+[1] Stefan Schrod, et. al. BITES: Balanced Individual Treatment Effect for Survival data, 2022. [[arXiv]](https://arxiv.org/abs/2201.03448).
 
 [2] Håvard Kvamme, Ørnulf Borgan, and Ida Scheel. Time-to-event prediction with neural networks and Cox regression. *Journal of Machine Learning Research*, 20(129):1–30, 2019. [[paper]](http://jmlr.org/papers/v20/18-424.html).
 
