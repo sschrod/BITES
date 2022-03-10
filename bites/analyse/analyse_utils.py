@@ -129,15 +129,6 @@ def get_ITE_BITES(model, X, treatment, best_treatment=None, death_probability=0.
         pred1_cf[i] = surv1_cf.axes[0][find_nearest_index(surv1_cf.iloc[:, i].values, death_probability)]
     ITE1 = pred1 - pred1_cf
 
-    correct_predicted_probability=None
-    if best_treatment is not None:
-        pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
-        pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
-        correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
-                                        / (pred_best_choice0.size + pred_best_choice1.size)
-        print('Fraction best choice: ' + str(correct_predicted_probability))
-
     ITE = np.zeros(X.shape[0])
     k, j = 0, 0
     for i in range(X.shape[0]):
@@ -148,6 +139,11 @@ def get_ITE_BITES(model, X, treatment, best_treatment=None, death_probability=0.
             ITE[i] = ITE1[j]
             j = j + 1
 
+    correct_predicted_probability=None
+    if best_treatment is not None:
+        correct_predicted_probability=np.sum(best_treatment==(ITE>0)*1)/best_treatment.shape[0]
+        print('Fraction best choice: ' + str(correct_predicted_probability))
+
     return ITE, correct_predicted_probability
 
 def get_ITE_CFRNet(model, X, treatment, best_treatment=None):
@@ -155,21 +151,17 @@ def get_ITE_CFRNet(model, X, treatment, best_treatment=None):
     pred,_ = model.predict_numpy(X, treatment)
     pred_cf,_ = model.predict_numpy(X, 1-treatment)
 
-    correct_predicted_probability=None
-    if best_treatment is not None:
-        pred_best_choice0=(pred_cf[treatment==0]-pred[treatment==0]>0) * 1
-        pred_best_choice1=(pred[treatment==1]-pred_cf[treatment==1]>0) * 1
-        correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
-                                        / (pred_best_choice0.size + pred_best_choice1.size)
-        print('Fraction best choice: ' + str(correct_predicted_probability))
-
     ITE = np.zeros(X.shape[0])
     for i in range(X.shape[0]):
         if treatment[i] == 0:
             ITE[i] = pred_cf[i]-pred[i]
         else:
             ITE[i] = pred[i]-pred_cf[i]
+
+    correct_predicted_probability=None
+    if best_treatment is not None:
+        correct_predicted_probability=np.sum(best_treatment==(ITE>0)*1)/best_treatment.shape[0]
+        print('Fraction best choice: ' + str(correct_predicted_probability))
 
     return ITE, correct_predicted_probability
 
@@ -206,15 +198,6 @@ def get_ITE_DeepSurvT(model0, model1, X, treatment, best_treatment=None, death_p
         pred1_cf[i] = surv1_cf.axes[0][find_nearest_index(surv1_cf.iloc[:, i].values, death_probability)]
     ITE1 = pred1 - pred1_cf
 
-    correct_predicted_probability=None
-    if best_treatment is not None:
-        pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
-        pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
-        correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
-                                        / (pred_best_choice0.size + pred_best_choice1.size)
-        print('Fraction best choice: ' + str(correct_predicted_probability))
-
     ITE = np.zeros(X.shape[0])
     k, j = 0, 0
     for i in range(X.shape[0]):
@@ -224,6 +207,11 @@ def get_ITE_DeepSurvT(model0, model1, X, treatment, best_treatment=None, death_p
         else:
             ITE[i] = ITE1[j]
             j = j + 1
+
+    correct_predicted_probability=None
+    if best_treatment is not None:
+        correct_predicted_probability=np.sum(best_treatment==(ITE>0)*1)/best_treatment.shape[0]
+        print('Fraction best choice: ' + str(correct_predicted_probability))
 
     return ITE, correct_predicted_probability
 
@@ -257,15 +245,6 @@ def get_ITE_DeepSurv(model, X, treatment, best_treatment=None, death_probability
         pred1_cf[i] = surv1_cf.axes[0][find_nearest_index(surv1_cf.iloc[:, i].values, death_probability)]
     ITE1 = pred1 - pred1_cf
 
-    correct_predicted_probability=None
-    if best_treatment is not None:
-        pred_best_choice0 = ((pred0 - pred0_cf) < 0) * 1
-        pred_best_choice1 = ((pred1 - pred1_cf) > 0) * 1
-        correct_predicted_probability = np.sum(np.append(best_treatment[treatment == 0] == pred_best_choice0,
-                                                         best_treatment[treatment == 1] == pred_best_choice1)) \
-                                        / (pred_best_choice0.size + pred_best_choice1.size)
-        print('Fraction best choice: ' + str(correct_predicted_probability))
-
     ITE = np.zeros(X.shape[0])
     k, j = 0, 0
     for i in range(X.shape[0]):
@@ -275,6 +254,11 @@ def get_ITE_DeepSurv(model, X, treatment, best_treatment=None, death_probability
         else:
             ITE[i] = ITE1[j]
             j = j + 1
+
+    correct_predicted_probability=None
+    if best_treatment is not None:
+        correct_predicted_probability=np.sum(best_treatment==(ITE>0)*1)/best_treatment.shape[0]
+        print('Fraction best choice: ' + str(correct_predicted_probability))
 
     return ITE, correct_predicted_probability
 
