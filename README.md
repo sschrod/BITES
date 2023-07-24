@@ -106,7 +106,7 @@ DeepSurv can be used without Treatment assignment[[6]](#6). Just set ```treatmen
 
 ## References
 
-[1] Stefan Schrod, et. al. BITES: Balanced Individual Treatment Effect for Survival data, 2022. [[arXiv]](https://arxiv.org/abs/2201.03448).
+[1] Stefan Schrod, et. al. BITES: Balanced Individual Treatment Effect for Survival data. *Bioinformatics*, Volume 38, Issue Supplement_1, 2022. [[paper]]([https://arxiv.org/abs/2201.03448](https://academic.oup.com/bioinformatics/article/38/Supplement_1/i60/6617509)).
 
 [2] Håvard Kvamme, Ørnulf Borgan, and Ida Scheel. Time-to-event prediction with neural networks and Cox regression. *Journal of Machine Learning Research*, 20(129):1–30, 2019. [[paper]](http://jmlr.org/papers/v20/18-424.html).
 
